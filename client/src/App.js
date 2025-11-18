@@ -2,24 +2,29 @@ import React from 'react';
 import { Container, AppBar, Typography, Grid, Grow} from '@mui/material';
 
 import news360 from './images/news360.png';
+import Posts from './componets/posts/posts.js';
+import Forms from './componets/forms/forms.js';
+import { styles } from './styles.js';
 
 const App = () => { 
     return (
     <Container maxWidth="lg">
 
-        <AppBar position='static'color='inherit'>
+        <AppBar sx={styles.appBar} position='static' color='inherit' >
 
-            <Typography variant='h2' align='center'>News360</Typography>
+            <Typography sx={styles.heading} variant='h2' align='center'>News360
+                 <img src={news360}  alt="news360" height='60' style={styles.image}/>
+            </Typography>
 
-            <img src={news360}  alt="news360" height='60' /> 
+            
 
          </AppBar>
 
          <Grow in>
             <container>
                 <Grid justify='space-between' alignContent='stretch' spacing={3}>
-                    <Grid item xs={12} sm={7}> </Grid>
-                    <Grid item xs={12} sm={4}> </Grid>
+                    <Grid item xs={12} sm={7}> <Posts /> </Grid>
+                    <Grid item xs={12} sm={4}> <Forms /> </Grid>
 
                 </Grid>
             </container>
