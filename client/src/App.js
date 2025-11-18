@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { Container, AppBar, Typography, Grid, Grow} from '@mui/material';
 
 import news360 from './images/news360.png';
@@ -6,7 +7,16 @@ import Posts from './componets/posts/posts.js';
 import Forms from './componets/forms/forms.js';
 import { styles } from './styles.js';
 
+import { useDispatch } from 'react-redux';
+import {getPosts} from  './actions/posts.js'; 
+
+
 const App = () => { 
+      
+    const dispatch = useDispatch();
+    useEffect(()=>{
+          dispatch(getPosts);
+    }, [dispatch]);
     return (
     <Container maxWidth="lg">
 
