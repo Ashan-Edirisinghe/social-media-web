@@ -15,7 +15,7 @@ const App = () => {
       
     const dispatch = useDispatch();
     useEffect(()=>{
-          dispatch(getPosts);
+          dispatch(getPosts());
     }, [dispatch]);
     return (
     <Container maxWidth="lg">
@@ -31,13 +31,13 @@ const App = () => {
          </AppBar>
 
          <Grow in>
-            <container>
-                <Grid justify='space-between' alignContent='stretch' spacing={3}>
+            <Container>
+                <Grid container justify='space-between' alignContent='stretch' spacing={3}>
                     <Grid item xs={12} sm={7}> <Posts /> </Grid>
                     <Grid item xs={12} sm={4}> <Forms /> </Grid>
 
                 </Grid>
-            </container>
+            </Container>
           </Grow>
 
         </Container>
