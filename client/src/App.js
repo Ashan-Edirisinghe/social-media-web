@@ -12,11 +12,11 @@ import {getPosts} from  './actions/posts.js';
 
 
 const App = () => { 
-    const [currentId, setCurrentId] = useState(null);
+    const [currentid, setCurrentId] = useState(null);
     const dispatch = useDispatch();
     useEffect(()=>{
           dispatch(getPosts());
-    }, [currentId,dispatch]);
+    }, [currentid,dispatch]);
     return (
     <Container maxWidth="lg">
 
@@ -37,7 +37,7 @@ const App = () => {
                         <Posts setCurrentId={setCurrentId} /> 
                     </Grid>
                     <Grid item xs={12} md={3}> 
-                        <Forms setCurrentId={setCurrentId} currentId={currentId} /> 
+                        <Forms setCurrentId={setCurrentId} currentid={currentid} /> 
                     </Grid>
                 </Grid>
             </Container>

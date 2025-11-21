@@ -7,8 +7,8 @@ import { createPost, updatePost } from '../../actions/posts.js';
  
 
 
-const Forms = ({ setCurrentId, currentId }) => {
-    const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null);
+const Forms = ({ setCurrentId, currentid }) => {
+    const post = useSelector((state) => currentid ? state.posts.find((p) => p._id === currentid) : null);
     const dispatch = useDispatch();
     const [postData, setPostData] = useState({
         creator: '',
@@ -24,9 +24,9 @@ const Forms = ({ setCurrentId, currentId }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(currentId){
-            console.log('Updating post with ID:', currentId);
-            dispatch(updatePost(currentId, postData));
+        if(currentid){
+            console.log('Updating post with ID:', currentid);
+            dispatch(updatePost(currentid, postData));
         }else{
             console.log('Creating new post');
             dispatch(createPost(postData));
@@ -64,7 +64,7 @@ const Forms = ({ setCurrentId, currentId }) => {
 
     return (
         <Paper sx={styles.paper} m={6}>
-            <form autoComplete="off" noValidate sx={{ ...styles.root, ...styles.form }} onSubmit={handleSubmit} currentId={currentId}   >
+            <form autoComplete="off" noValidate sx={{ ...styles.root, ...styles.form }} onSubmit={handleSubmit} currentid={currentid}   >
                 <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 'bold' }}>
                     Create Post
                 </Typography>
