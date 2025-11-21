@@ -1,13 +1,14 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback , useEffect, use} from 'react';
 import { TextField, Button, Paper, Typography, Box } from '@mui/material';
 import { useDropzone } from 'react-dropzone';
 import { styles } from './styles.js';
-import { useDispatch } from 'react-redux';
-import { createPost } from '../../actions/posts.js';
+import { useDispatch, useSelector} from 'react-redux';
+import { createPost, updatePost } from '../../actions/posts.js';
+ 
 
 
-const Forms = () => {
-
+const Forms = ({ setCurrentId, currentId }) => {
+    const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null);
     const dispatch = useDispatch();
     const [postData, setPostData] = useState({
         creator: '',
@@ -16,14 +17,25 @@ const Forms = () => {
         tags: '',
         selectedFile: ''
     });
+    
+   useEffect(() => {
+        if (post) setPostData(post);
+    }, [post]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(createPost(postData));
+        if(currentId){
+            console.log('Updating post with ID:', currentId);
+            dispatch(updatePost(currentId, postData));
+        }else{
+            console.log('Creating new post');
+            dispatch(createPost(postData));
+        }
         clear();
     };
 
     const clear = () => {
+        setCurrentId(null);
         setPostData({
             creator: '',
             title: '',
@@ -51,10 +63,10 @@ const Forms = () => {
     });
 
     return (
-        <Paper sx={styles.paper}>
-            <form autoComplete="off" noValidate sx={{ ...styles.root, ...styles.form }} onSubmit={handleSubmit}>
-                <Typography variant="h6" gutterBottom>
-                    Creating a Post
+        <Paper sx={styles.paper} m={6}>
+            <form autoComplete="off" noValidate sx={{ ...styles.root, ...styles.form }} onSubmit={handleSubmit} currentId={currentId}   >
+                <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 'bold' }}>
+                    Create Post
                 </Typography>
                 
                 <TextField 

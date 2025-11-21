@@ -1,22 +1,23 @@
 export const styles = {
   root: {
     '& .MuiTextField-root': {
-      margin: 1,
+      margin: 0.5,
     },
   },
   paper: {
-    padding: 2,
+    padding: 1.5,
   },
   form: {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'center',
+     
   },
   fileInput: {
-    width: '97%',
-    margin: '10px 0',
+    width: '85%',
+    margin: '8px 0',
   },
   buttonSubmit: {
-    marginBottom: 10,
+    marginBottom: 8,
   },
 };
