@@ -5,8 +5,11 @@ import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import moment from 'moment';
 import { styles } from './styles.js';
+import { useDispatch } from 'react-redux';
+import { deletePost } from '../../../actions/posts.js';
 
 const Post = ({ post, setCurrentId }) => {
+    const dispatch = useDispatch();
     return (
         <Card sx={styles.card}>
             <CardMedia sx={styles.media} image={post.selectedFile} title={post.title} />
@@ -31,7 +34,7 @@ const Post = ({ post, setCurrentId }) => {
                     <ThumbUpAltIcon fontSize="small" />
                     Like {post.likeCount}
                 </Button>
-                <Button size="small" color="primary" onClick={() => {}}>
+                <Button size="small" color="primary" onClick={() => { dispatch(deletePost(post._id)); }}>
                     <DeleteIcon fontSize="small" />
                     Delete
                 </Button>
