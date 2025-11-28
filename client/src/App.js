@@ -1,48 +1,49 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
-import { Container, AppBar, Typography, Grid, Grow} from '@mui/material';
-
-import news360 from './images/news360.png';
-import Posts from './componets/posts/posts.js';
-import Forms from './componets/forms/forms.js';
-import { styles } from './styles.js';
-
-import { useDispatch } from 'react-redux';
-import {getPosts} from  './actions/posts.js'; 
+import { Container, AppBar, Typography, Box, Button } from '@mui/material';
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
+ 
+import Profile from './componets/profile.js';
 
 
 const App = () => { 
-    const [currentid, setCurrentId] = useState(null);
-    const dispatch = useDispatch();
-    useEffect(()=>{
-          dispatch(getPosts());
-    }, [currentid,dispatch]);
+     
     return (
-    <Container maxWidth="lg">
+        <Container maxWidth="lg">
+            <AppBar position='static' color='inherit' sx={{ borderRadius: 2, margin: '30px 0', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: '10px 50px' }}>
+                <Typography variant='h2' align='center' sx={{ color: 'rgba(0,183,255, 1)' }}>
+                    News360
+                </Typography>
+                <Box sx={{ marginLeft: 'auto' }}>
+                    <SignedOut>
+                        <SignInButton mode="modal">
+                            <Button variant="contained" color="primary">Sign In</Button>
+                        </SignInButton>
+                    </SignedOut>
+                    <SignedIn>
+                        <UserButton />
+                    </SignedIn>
+                </Box>
+            </AppBar>
 
-        <AppBar sx={styles.appBar} position='static' color='inherit' >
+            <SignedIn>
+                <Profile />
+            </SignedIn>
 
-            <Typography sx={styles.heading} variant='h2' align='center'>News360
-                 <img src={news360}  alt="news360" height='60' style={styles.image}/>
-            </Typography>
-
-            
-
-         </AppBar>
-
-         <Grow in>
-            <Container>
-                <Grid container spacing={3}>
-                    <Grid item xs={12} md={9}> 
-                        <Posts setCurrentId={setCurrentId} /> 
-                    </Grid>
-                    <Grid item xs={12} md={3}> 
-                        <Forms setCurrentId={setCurrentId} currentid={currentid} /> 
-                    </Grid>
-                </Grid>
-            </Container>
-          </Grow>
-
+            <SignedOut>
+                <Box sx={{ textAlign: 'center', marginTop: '100px' }}>
+                    <Typography variant="h4" gutterBottom>
+                        Welcome to News360
+                    </Typography>
+                    <Typography variant="body1" color="textSecondary" paragraph>
+                        Please sign in to view and create posts
+                    </Typography>
+                    <SignInButton mode="modal">
+                        <Button variant="contained" color="primary" size="large">
+                            Sign In to Continue
+                        </Button>
+                    </SignInButton>
+                </Box>
+            </SignedOut>
         </Container>
     );
 }
