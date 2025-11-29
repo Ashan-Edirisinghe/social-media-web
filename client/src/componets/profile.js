@@ -6,8 +6,9 @@ import Posts from '../componets/posts/posts.js';
 import Forms from '../componets/forms/forms.js';
 import { styles } from '../styles.js';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import {getPosts} from  '../actions/posts.js'; 
+
 
 
 const Profile = () => {
@@ -18,6 +19,12 @@ const Profile = () => {
               dispatch(getPosts());
         }, [currentid,dispatch]);
 
+
+    //user login
+    const profile = useSelector((state) => state.profile);
+    
+    console.log('Posts from Redux:', profile);
+
     return(
          <Container maxWidth="lg">
 
@@ -25,16 +32,7 @@ const Profile = () => {
 
 
 
-        <AppBar sx={styles.appBar} position='static' color='inherit' >
-
-            <Typography sx={styles.heading} variant='h2' align='center'>News360
-                 <img src={news360}  alt="news360" height='60' style={styles.image}/>
-            </Typography>
-
-            
-
-         </AppBar>
-
+     
          <Grow in>
             <Container>
                 <Grid container spacing={3}>

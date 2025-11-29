@@ -1,5 +1,6 @@
 import PostMsg from "../models/postMsg.js";
 import mongoose from "mongoose";
+
 export const getPosts = async (req, res) => {
     try{
         

@@ -4,10 +4,20 @@ import { useDropzone } from 'react-dropzone';
 import { styles } from './styles.js';
 import { useDispatch, useSelector} from 'react-redux';
 import { createPost, updatePost } from '../../actions/posts.js';
+import { useUser } from '@clerk/clerk-react';
  
 
 
 const Forms = ({ setCurrentId, currentid }) => {
+
+    // loged user details from Clerk
+    const { user } = useUser();
+    const userEmail = user?.primaryEmailAddress?.emailAddress;
+    console.log('User from Clerk:', user);
+    console.log('User Email:', userEmail); 
+
+
+    //post selection
     const post = useSelector((state) => currentid ? state.posts.find((p) => p._id === currentid) : null);
     const dispatch = useDispatch();
     const [postData, setPostData] = useState({
@@ -66,8 +76,13 @@ const Forms = ({ setCurrentId, currentid }) => {
         <Paper sx={styles.paper} m={6}>
             <form autoComplete="off" noValidate sx={{ ...styles.root, ...styles.form }} onSubmit={handleSubmit} currentid={currentid}   >
                 <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 'bold' }}>
-                    Create Post
+                    {currentid ? 'Edit Post' : 'Create Post'}
                 </Typography>
+                {userEmail && (
+                    <Typography variant="caption" color="textSecondary" sx={{ mb: 2, display: 'block' }}>
+                        Posting as: {userEmail}
+                    </Typography>
+                )}
                 
                 <TextField 
                     name="creator"
