@@ -13,6 +13,7 @@ const Forms = ({ setCurrentId, currentid }) => {
     // loged user details from Clerk
     const { user } = useUser();
     const userEmail = user?.primaryEmailAddress?.emailAddress;
+    const userid = user?.id;
     console.log('User from Clerk:', user);
     console.log('User Email:', userEmail); 
 
@@ -21,7 +22,7 @@ const Forms = ({ setCurrentId, currentid }) => {
     const post = useSelector((state) => currentid ? state.posts.find((p) => p._id === currentid) : null);
     const dispatch = useDispatch();
     const [postData, setPostData] = useState({
-        creator: '',
+     
         title: '',
         message: '',
         tags: '',
@@ -34,12 +35,23 @@ const Forms = ({ setCurrentId, currentid }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        
+        // Add user information to the post data
+        const postWithUserInfo = {
+            ...postData,
+          
+           
+            creatorId: userid,
+            creator: userEmail
+             
+        };
+        
         if(currentid){
             console.log('Updating post with ID:', currentid);
-            dispatch(updatePost(currentid, postData));
+            dispatch(updatePost(currentid, postWithUserInfo));
         }else{
-            console.log('Creating new post');
-            dispatch(createPost(postData));
+            console.log('Creating new post with user info:', postWithUserInfo);
+            dispatch(createPost(postWithUserInfo));
         }
         clear();
     };
@@ -47,7 +59,6 @@ const Forms = ({ setCurrentId, currentid }) => {
     const clear = () => {
         setCurrentId(null);
         setPostData({
-            creator: '',
             title: '',
             message: '',
             tags: '',
@@ -80,18 +91,9 @@ const Forms = ({ setCurrentId, currentid }) => {
                 </Typography>
                 {userEmail && (
                     <Typography variant="caption" color="textSecondary" sx={{ mb: 2, display: 'block' }}>
-                        Posting as: {userEmail}
+                        Posting as: {userEmail}    
                     </Typography>
                 )}
-                
-                <TextField 
-                    name="creator"
-                    variant="outlined"
-                    label="Creator"
-                    fullWidth
-                    value={postData.creator}
-                    onChange={(e) => setPostData({ ...postData, creator: e.target.value })}
-                />
 
                 <TextField 
                     name="title"

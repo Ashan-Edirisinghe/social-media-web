@@ -7,21 +7,29 @@ import moment from 'moment';
 import { styles } from './styles.js';
 import { useDispatch } from 'react-redux';
 import { deletePost, likePost } from '../../../actions/posts.js';
+import { useUser } from '@clerk/clerk-react';
 
 const Post = ({ post, setCurrentId }) => {
     const dispatch = useDispatch();
+    const { user } = useUser();
+    const userId = user?.id;
+    
+    // Check if current user is the creator of this post
+    const isCreator = userId === post.creatorId;
     return (
         <Card sx={styles.card}>
             <CardMedia sx={styles.media} image={post.selectedFile} title={post.title} />
             <div style={styles.overlay}>
-                <Typography variant="h6">{post.creator}</Typography>
-                <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
+                <Typography variant="body1">{post.creator}</Typography>
+                <Typography variant="body1">{moment(post.createdAt).fromNow()}</Typography>
             </div>
-            <div style={styles.overlay2}>
-                <Button style={{color: 'white'}} size="small" onClick={() =>  setCurrentId(post._id) }>
-                    <MoreHorizIcon fontSize="default" />
-                </Button>
-            </div>
+            {isCreator && (
+                <div style={styles.overlay2}>
+                    <Button style={{color: 'white'}} size="small" onClick={() =>  setCurrentId(post._id) }>
+                        <MoreHorizIcon fontSize="default" />
+                    </Button>
+                </div>
+            )}
             <div style={styles.details}>
                 <Typography variant="body2" color="textSecondary">{post.tags.map((tag) => `#${tag} `)}</Typography>
             </div>
@@ -34,10 +42,12 @@ const Post = ({ post, setCurrentId }) => {
                     <ThumbUpAltIcon fontSize="small" />
                     Like {post.likeCount}
                 </Button>
-                <Button size="small" color="primary" onClick={() => { dispatch(deletePost(post._id)); }}>
-                    <DeleteIcon fontSize="small" />
-                    Delete
-                </Button>
+                {isCreator && (
+                    <Button size="small" color="primary" onClick={() => { dispatch(deletePost(post._id)); }}>
+                        <DeleteIcon fontSize="small" />
+                        Delete
+                    </Button>
+                )}
             </CardActions>
         </Card>
     )

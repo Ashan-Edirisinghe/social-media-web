@@ -8,6 +8,7 @@ import { styles } from '../styles.js';
 
 import { useDispatch,useSelector } from 'react-redux';
 import {getPosts} from  '../actions/posts.js'; 
+import { useUser } from '@clerk/clerk-react';
 
 
 
@@ -20,10 +21,14 @@ const Profile = () => {
         }, [currentid,dispatch]);
 
 
-    //user login
-    const profile = useSelector((state) => state.profile);
+    //user login from Clerk
+    const { user, isLoaded } = useUser();
+    const userId = user?.id;
+    const userEmail = user?.primaryEmailAddress?.emailAddress;
     
-    console.log('Posts from Redux:', profile);
+    console.log('Logged in user:', user);
+    console.log('User ID:', userId);
+    console.log('User Email:', userEmail);
 
     return(
          <Container maxWidth="lg">

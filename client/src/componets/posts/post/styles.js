@@ -1,7 +1,7 @@
 export const styles = {
   media: {
     height: 0,
-    paddingTop: '56.25%',
+    paddingTop: '75%',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     backgroundBlendMode: 'darken',
   },
@@ -16,7 +16,10 @@ export const styles = {
     flexDirection: 'column',
     justifyContent: 'space-between',
     borderRadius: '15px',
-    height: '100%',
+    minHeight: '100%',
+    height: 'auto',
+    minWidth: '350px',
+    width: '100%',
     position: 'relative',
   },
   overlay: {
@@ -30,6 +33,7 @@ export const styles = {
     top: '20px',
     right: '20px',
     color: 'white',
+    width: "auto",
   },
   grid: {
     display: 'flex',
@@ -37,10 +41,11 @@ export const styles = {
   details: {
     display: 'flex',
     justifyContent: 'space-between',
-    margin: '20px',
+    margin: '24px',
   },
   title: {
-    padding: '0 16px',
+    padding: '0 20px',
+    fontSize: '1.25rem',
   },
   cardActions: {
     padding: '0 16px 8px 16px',
